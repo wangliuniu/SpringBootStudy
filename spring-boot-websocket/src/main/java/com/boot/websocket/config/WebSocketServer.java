@@ -34,7 +34,7 @@ public class WebSocketServer {
         System.out.println("有新窗口开始监听,当前在线人数为"
                 + getOnlineCount());
         try {
-            sendMessage("连接成功");
+            sendMessage("");
         } catch (IOException e) {
             System.out.println("WebSocket IO异常");
         }
