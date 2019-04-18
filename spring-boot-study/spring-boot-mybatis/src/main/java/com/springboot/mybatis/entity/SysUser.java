@@ -1,8 +1,12 @@
 package com.springboot.mybatis.entity;
 
-public class User {
-    private Long Id;
-    private  String account;
-    private  String password;
-    private  Integer credits;
+import lombok.Data;
+
+@Data
+public class SysUser {
+    private long userId;
+    private String mobile;
+    private String password;
+    private String username;
+    private String avatar;
 }

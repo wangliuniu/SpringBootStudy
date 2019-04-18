@@ -10,7 +10,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api")
-public class Controller {
+@CrossOrigin("http://localhost:80")
+public class CourseController {
     @Resource
     private CourseService courseService;
 
@@ -18,27 +19,31 @@ public class Controller {
     public List<Course> selectAll() {
         return courseService.selectAll();
     }
-
-
     @RequestMapping(value = "/course/{id}", method = RequestMethod.GET)
     public Course getOne(@PathVariable("id") long id) {
         return courseService.getOne(id);
     }
-
     @RequestMapping(value = "/course/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("id") long id) {
-
+    public void deleteCourse(@PathVariable("id") long id) {
         courseService.delete(id);
     }
-//增加
     @RequestMapping(value = "/course", method = RequestMethod.POST)
-    public Course addCourse(@RequestBody Course course) {
+    public void addCourse(@RequestBody Course course) {
         course.setCourseCode(RandomUtil.getRandomCode());
-        return courseService.insert(course);
+        courseService.insert(course);
     }
-//修改
     @RequestMapping(value = "/course", method = RequestMethod.PUT)
     public void updateCourse(@RequestBody Course course) {
         courseService.update(course);
+    }
+
+    @RequestMapping(value = "/doing/{id}", method = RequestMethod.GET)
+    public List<Course> selectDoing(@PathVariable("id") short id) {
+        return courseService.selectDoing(id);
+    }
+
+    @RequestMapping(value = "/finish/{id}", method = RequestMethod.GET)
+    public List<Course> selectFined(@PathVariable("id") short id) {
+        return courseService.selectFined(id);
     }
 }

@@ -1,10 +1,11 @@
-package com.springboot.upload.controller;
+package com.springboot.mybatis.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -21,7 +22,7 @@ import java.util.UUID;
 * 上传文件控制器
 * 直接上传到服务器
 * */
-@Controller
+@RestController
 public class UploadController {
     //指定一个临时目录作为上传目录
 //    private static String UPLOAD_FOLDER = "E:/temp/";
@@ -40,6 +41,7 @@ public class UploadController {
             return "redirect:upload_status";
         }
         //选择了文件，开始进行上传操作
+        String returnFileName ="";
         try {
 //            构建上传目标路径,找到项目的target的classes目录
             File destFile = new File(ResourceUtils.getURL("classPath").getPath());
@@ -68,7 +70,8 @@ public class UploadController {
             //最重要的一步，开始将源文件写入目标地址
             Path path = Paths.get(upload.getAbsolutePath()+"/"+fileName);
             Files.write(path,bytes);
-            //将文件上传成功的信息写入messages
+            returnFileName="http://localhost:8080/upload/"+ srcFile.getOriginalFilename();
+        //将文件上传成功的信息写入messages
             redirectAttributes.addFlashAttribute("message","文件上传成功"+fileName);
         }catch (IOException e){
             e.printStackTrace();
